@@ -22,10 +22,12 @@ Or install it yourself as:
 
 ## Usage
 
+```ruby
   3.to_token
   3.to_token(format: 8)
 
   "0.00000003"
+```
 
 ## Development
 
