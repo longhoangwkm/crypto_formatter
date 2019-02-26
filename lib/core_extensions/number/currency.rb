@@ -1,6 +1,10 @@
 module CoreExtensions
   module Number
     module Currency
+      def to_satoshi
+        (self * 1e8).to_i
+      end
+
       def to_token(format: 8)
         (self.to_i / (10**format).to_f).to_d.to_s('F')
       end
