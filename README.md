@@ -1,8 +1,6 @@
 # CryptoFormatter
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/crypto_formatter`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A Ruby gem that provides convenient number formatting methods for both cryptocurrency and fiat currency values. Easily format numbers as Bitcoin satoshis, tokens, or various fiat currencies with proper symbols and formatting.
 
 ## Installation
 
@@ -22,12 +20,76 @@ Or install it yourself as:
 
 ## Usage
 
-```ruby
-  3.to_token
-  3.to_token(format: 8)
+### Cryptocurrency Formatting
 
-  "0.00000003"
+```ruby
+# Convert to Bitcoin satoshis
+1.to_satoshi          # => 100000000
+0.5.to_satoshi        # => 50000000
+
+# Convert satoshis to token format
+100000000.to_token    # => "1.0"
+50000000.to_token     # => "0.5"
+
+# Custom token format (decimal places)
+1000.to_token(format: 3)  # => "1.0"
+500.to_token(format: 3)   # => "0.5"
 ```
+
+### Fiat Currency Formatting
+
+```ruby
+# Basic USD formatting (default)
+1234.56.to_currency   # => "$1,234.56"
+1000000.to_currency   # => "$1,000,000.00"
+
+# Different currencies
+1234.56.to_currency(currency: 'EUR')  # => "€1,234.56"
+1234.56.to_currency(currency: 'GBP')  # => "£1,234.56"
+1234.56.to_currency(currency: 'JPY', precision: 0)  # => "¥1,235"
+
+# Specific currency methods
+1234.56.to_usd        # => "$1,234.56"
+1234.56.to_eur        # => "€1,234.56"
+1234.56.to_gbp        # => "£1,234.56"
+1234.56.to_jpy        # => "¥1,235" (no decimals by default)
+1234.56.to_cad        # => "C$1,234.56"
+1234.56.to_aud        # => "A$1,234.56"
+1234.56.to_chf        # => "CHF 1,234.56"
+
+# Custom precision
+1234.567.to_currency(precision: 3)  # => "$1,234.567"
+1234.567.to_currency(precision: 1)  # => "$1,234.6"
+1234.567.to_currency(precision: 0)  # => "$1,235"
+
+# Custom delimiters and separators
+1234.56.to_currency(delimiter: '.', separator: ',')  # => "$1.234,56"
+1234567.89.to_currency(delimiter: ' ')               # => "$1 234 567.89"
+
+# Works with both integers and floats
+1234.to_currency      # => "$1,234.00"
+1234.56.to_currency   # => "$1,234.56"
+```
+
+### Supported Currencies
+
+The gem supports the following currencies with proper symbols:
+
+- **USD** ($) - US Dollar
+- **EUR** (€) - Euro
+- **GBP** (£) - British Pound
+- **JPY** (¥) - Japanese Yen
+- **CAD** (C$) - Canadian Dollar
+- **AUD** (A$) - Australian Dollar
+- **CHF** (CHF) - Swiss Franc
+- **SEK** (kr) - Swedish Krona
+- **NOK** (kr) - Norwegian Krone
+- **DKK** (kr) - Danish Krone
+- **HKD** (HK$) - Hong Kong Dollar
+- **SGD** (S$) - Singapore Dollar
+- **NZD** (NZ$) - New Zealand Dollar
+
+For unsupported currencies, the currency code will be appended after the formatted number.
 
 ## Development
 
